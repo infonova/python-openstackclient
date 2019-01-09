@@ -237,7 +237,10 @@ class ListConsistencyGroup(command.Lister):
         volume_client = self.app.client_manager.volume
         consistency_groups = volume_client.consistencygroups.list(
             detailed=True,
-            search_opts={'all_tenants': parsed_args.all_projects}
+            search_opts=(
+                {'all_tenants': parsed_args.all_projects}
+                if parsed_args.all_projects else None
+            )
         )
 
         return (columns, (

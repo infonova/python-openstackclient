@@ -460,7 +460,7 @@ class TestConsistencyGroupList(TestConsistencyGroup):
         columns, data = self.cmd.take_action(parsed_args)
 
         self.consistencygroups_mock.list.assert_called_once_with(
-            detailed=True, search_opts={'all_tenants': False})
+            detailed=True, search_opts=None)
         self.assertEqual(self.columns, columns)
         self.assertEqual(self.data, list(data))
 
@@ -494,7 +494,7 @@ class TestConsistencyGroupList(TestConsistencyGroup):
         columns, data = self.cmd.take_action(parsed_args)
 
         self.consistencygroups_mock.list.assert_called_once_with(
-            detailed=True, search_opts={'all_tenants': False})
+            detailed=True, search_opts=None)
         self.assertEqual(self.columns_long, columns)
         self.assertEqual(self.data_long, list(data))
 
