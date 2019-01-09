@@ -96,7 +96,10 @@ class CreateConsistencyGroup(command.ShowOne):
         exclusive_group.add_argument(
             "--volume-type",
             metavar="<volume-type>",
-            help=_("Volume type of this consistency group (name or ID)")
+            help=_("Volume type of this consistency group (name or ID). "
+                   "You can specify it multiple times to add more volume "
+                   "types to the consistency group."),
+            action="append"
         )
         exclusive_group.add_argument(
             "--consistency-group-source",
@@ -125,11 +128,13 @@ class CreateConsistencyGroup(command.ShowOne):
     def take_action(self, parsed_args):
         volume_client = self.app.client_manager.volume
         if parsed_args.volume_type:
-            volume_type_id = utils.find_resource(
-                volume_client.volume_types,
-                parsed_args.volume_type).id
+            volume_type_ids = [
+                utils.find_resource(volume_client.volume_types, volume_type).id
+                for volume_type in parsed_args.volume_type
+            ]
+
             consistency_group = volume_client.consistencygroups.create(
-                volume_type_id,
+                ",".join(volume_type_ids),
                 name=parsed_args.name,
                 description=parsed_args.description,
                 availability_zone=parsed_args.availability_zone

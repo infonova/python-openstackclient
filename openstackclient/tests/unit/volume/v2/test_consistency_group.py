@@ -199,7 +199,7 @@ class TestConsistencyGroupCreate(TestConsistencyGroup):
             self.new_consistency_group.name,
         ]
         verifylist = [
-            ('volume_type', self.volume_type.id),
+            ('volume_type', [self.volume_type.id]),
             ('description', self.new_consistency_group.description),
             ('availability_zone',
              self.new_consistency_group.availability_zone),
@@ -230,7 +230,7 @@ class TestConsistencyGroupCreate(TestConsistencyGroup):
             self.new_consistency_group.availability_zone,
         ]
         verifylist = [
-            ('volume_type', self.volume_type.id),
+            ('volume_type', [self.volume_type.id]),
             ('description', self.new_consistency_group.description),
             ('availability_zone',
              self.new_consistency_group.availability_zone),
